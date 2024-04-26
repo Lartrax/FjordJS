@@ -10,21 +10,27 @@ const translation = {
   hvis: "if (",
   dersom: "if (",
   så: "{",
-  overstiger: ">",
-  understiger: "<",
+  overgår: ">",
+  undergår: "<",
   eller: "else",
   loggfør: "console.log(",
+  imens: "while (",
 };
 
 const App: Component = () => {
   const [inputScript, setInputScript] = createSignal<string>(
-    'dersom 2 overstiger 1, så loggfør "hei verden".'
+    `La i være 0.
+
+Imens i undergår 10, 
+så loggfør i, 
+samt i++, 
+samt loggfør "hei".`
   );
   const [outputScript, setOutputScript] = createSignal<string>("");
 
-  const formatPunctuation = (text: string): string => {
+  const format = (text: string, regex: RegExp): string => {
     // Create array of lines by splitting on µ and §. But keep the symbols in the array.
-    let seperatedText = text.split(/(?<=[µ§])/g);
+    let seperatedText = text.split(regex);
 
     let symbolizedText: string[] = [];
 
@@ -67,6 +73,7 @@ const App: Component = () => {
     let inputArray = input
       .replaceAll(",", "µ")
       .replaceAll(".", "§")
+      .replaceAll("samt", "£")
       .split(/\s+/);
 
     inputArray.forEach((part, i) => {
@@ -80,11 +87,53 @@ const App: Component = () => {
       }
     });
 
-    let translated = inputArray.join(" ");
+    // £ "samt" is used for opening once more code can be written
+    const samtArray = inputArray.join(" ").split(/(?=[£])/g);
 
-    translated = formatPunctuation(translated).replaceAll(" ;", ";\n\n");
+    let samtConstruct: string[] = [];
 
-    setOutputScript(translated);
+    samtArray.forEach((line) => {
+      // Includes samt
+      if (line.includes("£")) {
+        const i = Math.max(line.lastIndexOf("§"), line.lastIndexOf("µ"));
+
+        line = line.substring(0, i) + "$;" + line.substring(i + 1, line.length);
+
+        samtConstruct.push(line.replace("£", ""));
+      } else {
+        samtConstruct.push(line);
+      }
+    });
+
+    let punctuated = format(samtConstruct.join(" "), /(?<=[µ§])/g).replaceAll(
+      " ;",
+      ";\n\n"
+    );
+
+    const movedArray = punctuated.split(/(?<=[$])/g);
+
+    let movedConstruct: string[] = [];
+
+    movedArray.forEach((line) => {
+      console.log(line);
+      if (line.includes("$")) {
+        const i = Math.max(
+          line.lastIndexOf(")"),
+          line.lastIndexOf("]"),
+          line.lastIndexOf("}")
+        );
+        const char = line.charAt(i);
+
+        line =
+          line.substring(0, i - 1) + ";" + line.substring(i + 3, line.length);
+
+        movedConstruct.push(line.replace("$", char));
+      } else {
+        movedConstruct.push(line);
+      }
+    });
+
+    setOutputScript(movedConstruct.join("").replaceAll(" ;", ";"));
   });
 
   return (
