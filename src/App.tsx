@@ -155,7 +155,7 @@ samt loggfør "hei!".`
       }
     });
 
-    setOutputScript(movedConstruct.join("").replaceAll(" ;", ";\n\n"));
+    setOutputScript(movedConstruct.join("").replaceAll(" ;", ";\n"));
   });
 
   return (
