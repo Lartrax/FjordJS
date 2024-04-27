@@ -19,33 +19,22 @@ const translation = {
   imens: "while (",
   plus: "+",
   minus: "-",
+  bruker: " = (",
+  gjør: "=>",
+  med: "(",
 };
 
 const App: Component = () => {
   const [inputScript, setInputScript] = createSignal<string>(
-    `La i være 0.
+    `La tallet være 99.
 
-Imens i undergår 10, 
-så loggfør i, 
-samt i++.
+Konstant utsagn bruker tall, gjør så 
+Konstant mindre er tall minus 1; 
+Loggfør tall plus " bottles of beer on the wall " plus tall plus " bottles of beer take one down pass it around " plus mindre plus " bottles of beer on the wall".
 
-Dersom i tilsvarer 9, 
-så loggfør "i = 9", 
-ellers loggfør "i = " + i, 
-samt loggfør "hei!".
-
-
-Konstant fartsmål er 30.
-
-Hvis fartsmål tilsvarer "30", 
-så loggfør '30 === "30"',
-alternativt dersom 30 ligner "30", 
-så loggfør '30 == "30"'.
-
-
-Imens fartsmål overgår i, 
-så loggfør i + "km/t",
-samt i er i + 1.`
+Imens tallet overgår 0, 
+så utsagn med tallet,
+samt tallet er tallet minus 1.`
   );
   const [outputScript, setOutputScript] = createSignal<string>("");
 
