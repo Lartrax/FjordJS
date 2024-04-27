@@ -13,6 +13,7 @@ const translation = {
   overgår: ">",
   undergår: "<",
   eller: "else",
+  ellers: "else {",
   loggfør: "console.log(",
   imens: "while (",
 };
@@ -23,8 +24,12 @@ const App: Component = () => {
 
 Imens i undergår 10, 
 så loggfør i, 
-samt i++, 
-samt loggfør "hei".`
+samt i++.
+        
+Dersom i tilsvarer 9, 
+så loggfør "i = 9", 
+ellers loggfør "i = " + i, 
+samt loggfør "hei!".`
   );
   const [outputScript, setOutputScript] = createSignal<string>("");
 
@@ -95,7 +100,7 @@ samt loggfør "hei".`
     samtArray.forEach((line) => {
       // Includes samt
       if (line.includes("£")) {
-        const i = Math.max(line.lastIndexOf("§"), line.lastIndexOf("µ"));
+        const i = line.indexOf("§");
 
         line = line.substring(0, i) + "$;" + line.substring(i + 1, line.length);
 
@@ -105,35 +110,51 @@ samt loggfør "hei".`
       }
     });
 
-    let punctuated = format(samtConstruct.join(" "), /(?<=[µ§])/g).replaceAll(
-      " ;",
-      ";\n\n"
-    );
+    let punctuated = format(samtConstruct.join(" "), /(?<=[µ§])/g);
 
     const movedArray = punctuated.split(/(?<=[$])/g);
 
     let movedConstruct: string[] = [];
 
     movedArray.forEach((line) => {
-      console.log(line);
       if (line.includes("$")) {
-        const i = Math.max(
+        // Find closest closed bracket
+        const closed_i = Math.max(
           line.lastIndexOf(")"),
           line.lastIndexOf("]"),
           line.lastIndexOf("}")
         );
-        const char = line.charAt(i);
+        const closed_char = line.charAt(closed_i);
 
+        // If closest open bracket is closer than closest closed bracket then move it too.
+        const open_i = Math.max(
+          line.lastIndexOf("("),
+          line.lastIndexOf("["),
+          line.lastIndexOf("{")
+        );
+        const open_char =
+          open_i > closed_i
+            ? line
+                .charAt(open_i)
+                .replace("(", ")")
+                .replace("[", "]")
+                .replace("{", "}")
+            : "";
+
+        // Remove closed char
         line =
-          line.substring(0, i - 1) + ";" + line.substring(i + 3, line.length);
+          line.substring(0, closed_i - 1) +
+          ";" +
+          line.substring(closed_i + 3, line.length);
 
-        movedConstruct.push(line.replace("$", char));
+        // Append opening and closing char to moved position
+        movedConstruct.push(line.replace("$", open_char + closed_char));
       } else {
         movedConstruct.push(line);
       }
     });
 
-    setOutputScript(movedConstruct.join("").replaceAll(" ;", ";"));
+    setOutputScript(movedConstruct.join("").replaceAll(" ;", ";\n\n"));
   });
 
   return (
