@@ -1,3 +1,7 @@
+<p>
+    <img src="assets/banner.webp" alt="FjordJS">
+</p>
+
 # FjordJS
 
 ### A Norwegian JavaScript transpiler
@@ -20,15 +24,16 @@ Example:
 
 La i være 0.
 
-Imens i undergår 10, 
-så loggfør i, 
+Imens i undergår 10,
+så loggfør i,
 samt i++.
-        
-Dersom i tilsvarer 9, 
-så loggfør "i = 9", 
-ellers loggfør "i = " + i, 
+
+Dersom i tilsvarer 9,
+så loggfør "i = 9",
+ellers loggfør "i = " + i,
 samt loggfør "hei!".
-```
+
+````
 
 </td>
 <td>
@@ -48,10 +53,8 @@ if ( i === 9 ) {
   console.log( "i = " + i );
   console.log( "hei!");
 };
-```
+````
 
 </td>
 </tr>
 </table>
-
-
