@@ -22,16 +22,21 @@ Example:
  
 ```go
 
-La i være 0.
+La tallet være 99.
 
-Imens i undergår 10,
-så loggfør i,
-samt i++.
+Konstant utsagn bruker tall, gjør så 
+    Konstant mindre er tall minus 1; 
+    Loggfør tall plus
+    " bottles of beer on the wall " plus
+    tall plus
+    " bottles of beer take one down pass it around " plus
+    mindre plus
+    " bottles of beer on the wall".
 
-Dersom i tilsvarer 9,
-så loggfør "i = 9",
-ellers loggfør "i = " + i,
-samt loggfør "hei!".
+Imens tallet overgår 0, 
+    så utsagn med tallet,
+    samt tallet er tallet minus 1.
+
 
 
 
@@ -44,18 +49,23 @@ samt loggfør "hei!".
 
 ```js
 
-let i = 0 ;
+let tallet = 99 ;
 
-while ( i < 10 ) {
-  console.log( i );
-  i++;
+const utsagn  = ( tall ) => {
+    const mindre = tall - 1;
+    console.log(
+        tall +
+        " bottles of beer on the wall " +
+        tall +
+        " bottles of beer take one down pass it around " +
+        mindre +
+        " bottles of beer on the wall"
+    )
 };
 
-if ( i === 9 ) {
-  console.log( "i = 9" )
-} else {
-  console.log( "i = " + i );
-  console.log( "hei!");
+while ( tallet > 0 ) {
+    utsagn ( tallet );
+    tallet = tallet - 1;
 };
 ````
 
