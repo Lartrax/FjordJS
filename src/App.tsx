@@ -12,10 +12,13 @@ const translation = {
   så: "{",
   overgår: ">",
   undergår: "<",
-  eller: "else",
-  ellers: "else {",
+  eller: "||",
+  alternativt: "\nelse",
+  ellers: "\nelse {",
   loggfør: "console.log(",
   imens: "while (",
+  plus: "+",
+  minus: "-",
 };
 
 const App: Component = () => {
@@ -25,11 +28,24 @@ const App: Component = () => {
 Imens i undergår 10, 
 så loggfør i, 
 samt i++.
-        
+
 Dersom i tilsvarer 9, 
 så loggfør "i = 9", 
 ellers loggfør "i = " + i, 
-samt loggfør "hei!".`
+samt loggfør "hei!".
+
+
+Konstant fartsmål er 30.
+
+Hvis fartsmål tilsvarer "30", 
+så loggfør '30 === "30"',
+alternativt dersom 30 ligner "30", 
+så loggfør '30 == "30"'.
+
+
+Imens fartsmål overgår i, 
+så loggfør i + "km/t",
+samt i er i + 1.`
   );
   const [outputScript, setOutputScript] = createSignal<string>("");
 
@@ -148,9 +164,25 @@ samt loggfør "hei!".`
           " ;" +
           line.substring(closed_i + 3, line.length);
 
+        // Remove artefacts
+        const opener = line.indexOf("(");
+        const closer = line.indexOf(")");
+
+        if (opener === -1 || closer < opener) {
+          line = line.replace(")", "");
+        }
+
         // Append opening and closing char to moved position
         movedConstruct.push(line.replace("$", open_char + " ;" + closed_char));
       } else {
+        // Remove artefacts
+        const opener = line.indexOf("(");
+        const closer = line.indexOf(")");
+
+        if (opener === -1 || closer < opener) {
+          line = line.replace(")", "");
+        }
+
         movedConstruct.push(line);
       }
     });
