@@ -33,6 +33,10 @@ så loggfør "i = 9",
 ellers loggfør "i = " + i,
 samt loggfør "hei!".
 
+
+
+
+
 ````
 
 </td>
