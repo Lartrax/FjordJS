@@ -102,7 +102,8 @@ samt loggfør "hei!".`
       if (line.includes("£")) {
         const i = line.indexOf("§");
 
-        line = line.substring(0, i) + "$;" + line.substring(i + 1, line.length);
+        line =
+          line.substring(0, i) + "$ ;" + line.substring(i + 1, line.length);
 
         samtConstruct.push(line.replace("£", ""));
       } else {
@@ -144,11 +145,11 @@ samt loggfør "hei!".`
         // Remove closed char
         line =
           line.substring(0, closed_i - 1) +
-          ";" +
+          " ;" +
           line.substring(closed_i + 3, line.length);
 
         // Append opening and closing char to moved position
-        movedConstruct.push(line.replace("$", open_char + closed_char));
+        movedConstruct.push(line.replace("$", open_char + " ;" + closed_char));
       } else {
         movedConstruct.push(line);
       }
