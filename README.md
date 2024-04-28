@@ -72,3 +72,4 @@ while ( tallet > 0 ) {
 </td>
 </tr>
 </table>
+
