@@ -30,7 +30,7 @@ const App: Component = () => {
 
 Konstant utsagn bruker tall, gjør så 
 Konstant mindre er tall minus 1,
-Loggfør tall plus " bottles of beer on the wall " plus tall plus " bottles of beer take one down pass it around " plus mindre plus " bottles of beer on the wall".
+Loggfør tall plus " bottles of beer on the wall\\n" plus tall plus " bottles of beer\\ntake one down pass it around\\n" plus mindre plus " bottles of beer on the wall".
 
 Imens tallet overgår 0, så 
 utsagn med tallet,
@@ -136,8 +136,9 @@ tallet er tallet minus 1.`
         "flex-grow": 1,
         "justify-content": "center",
         gap: "2rem",
-        "margin-left": "1rem",
-        "margin-right": "1rem",
+        "padding-left": "1rem",
+        "padding-right": "1rem",
+        background: "#333",
       }}
     >
       <textarea
@@ -146,6 +147,8 @@ tallet er tallet minus 1.`
           padding: "1rem",
           "font-size": "1.5rem",
           "word-break": "break-word",
+          background: "#777",
+          color: "#eee",
         }}
         value={inputScript()}
         onInput={(e) => setInputScript(e.target.value)}
@@ -157,6 +160,8 @@ tallet er tallet minus 1.`
           padding: "1rem",
           "font-size": "1.5rem",
           "word-break": "break-word",
+          background: "#555",
+          color: "#eee",
         }}
       >
         {outputScript()}
