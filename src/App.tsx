@@ -105,13 +105,13 @@ tallet er tallet minus 1.`
       // Add closer to stopper § -> "§ $ ;" $ will later switch with }
       if (section.includes("£")) {
         const stopper = section.indexOf("§");
-
-        section =
-          section.slice(0, stopper + 1).replaceAll("µ", "µ ;") +
-          "$ ;" +
-          section.slice(stopper + 1, section.length);
+        if (stopper > 0) {
+          section =
+            section.slice(0, stopper + 1).replaceAll("µ", "µ ;") +
+            "$ ;" +
+            section.slice(stopper + 1, section.length);
+        }
       }
-
       boxesArray[i] = section;
     });
 
