@@ -25,17 +25,17 @@ Example:
 La tallet være 99.
 
 Konstant utsagn bruker tall, gjør så 
-    Konstant mindre er tall minus 1, 
-    Loggfør tall plus
-    " bottles of beer on the wall " plus
-    tall plus
-    " bottles of beer take one down pass it around " plus
-    mindre plus
-    " bottles of beer on the wall".
+Konstant mindre er tall minus 1,
+Loggfør tall plus
+" bottles of beer on the wall\n" plus tall plus
+" bottles of beer\ntake one down pass it around\n"
+plus mindre plus " bottles of beer on the wall".
 
-Imens tallet overgår 0, 
-    så utsagn med tallet,
-    tallet er tallet minus 1.
+Imens tallet overgår 0, så 
+utsagn med tallet,
+tallet er tallet minus 1.
+
+
 
 
 
@@ -49,18 +49,18 @@ Imens tallet overgår 0,
 
 ```js
 
-let tallet = 99 ;
+let tallet = 99;
 
 const utsagn  = ( tall ) => {
     const mindre = tall - 1;
     console.log(
         tall +
-        " bottles of beer on the wall " +
+        " bottles of beer on the wall\n" +
         tall +
-        " bottles of beer take one down pass it around " +
+        " bottles of beer\ntake one down pass it around\n" +
         mindre +
         " bottles of beer on the wall"
-    )
+    );
 };
 
 while ( tallet > 0 ) {
