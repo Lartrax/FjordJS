@@ -13,8 +13,8 @@ const translation = {
   overgår: ">",
   undergår: "<",
   eller: "||",
-  alternativt: "\nelse",
-  ellers: "\nelse {",
+  alternativt: "else",
+  ellers: "else {",
   loggfør: "console.log(",
   imens: "while (",
   plus: "+",
@@ -57,17 +57,15 @@ tallet er tallet minus 1.`
       }
 
       // Create closing symbols from symbolStack
-      const symbols =
-        " " +
-        symbolStack
-          .reverse()
-          .join(" ")
-          .replaceAll("(", ")")
-          .replaceAll("{", "}");
+      const symbols = symbolStack
+        .reverse()
+        .join("")
+        .replaceAll("(", " )")
+        .replaceAll("{", "}");
 
       // Push line to symbolizedText after replacing punctuation with closing brackets
       symbolizedText.push(
-        line.replace("µ", symbols).replace("§", symbols + " ;")
+        line.replace("µ", symbols).replace("§", symbols + ";")
       );
     });
 
@@ -107,23 +105,24 @@ tallet er tallet minus 1.`
         const stopper = section.indexOf("§");
         if (stopper > 0) {
           section =
-            section.slice(0, stopper + 1).replaceAll("µ", "µ ;") +
-            "$ ;" +
+            section.slice(0, stopper + 1).replaceAll("µ", "µ;") +
+            "$;" +
             section.slice(stopper + 1, section.length);
         }
       }
       boxesArray[i] = section;
     });
 
-    let punctuated = format(boxesArray.join(" "), /(?<=[µ§])/g);
+    const punctuated = format(boxesArray.join(""), /(?<=[µ§])/g);
 
     setOutputScript(
       punctuated
+        .replaceAll("; else", "\nelse")
         .replaceAll("{", "{\n") // Formatting
         .replaceAll("}", "\n}") // Formatting
         .replaceAll("£", "{\n") // Switch "så" with "{"
-        .replaceAll("$", "\n}") // Switch "så" stopper with "}"
-        .replaceAll(" ;", ";\n") // Formatting
+        .replaceAll("$", "}") // Switch "så" stopper with "}"
+        .replaceAll(";", ";\n") // Formatting
     );
   });
 
