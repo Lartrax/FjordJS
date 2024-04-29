@@ -146,7 +146,7 @@ tallet er tallet minus 1.`
           padding: "1rem",
           "font-size": "1.5rem",
           "word-break": "break-word",
-          background: "#777",
+          background: "#555",
           color: "#eee",
         }}
         value={inputScript()}
@@ -159,14 +159,14 @@ tallet er tallet minus 1.`
           padding: "1rem",
           "font-size": "1.5rem",
           "word-break": "break-word",
-          background: "#555",
-          color: "#eee",
+          background: "#666",
+          color: "#ddd",
         }}
       >
         {outputScript()}
       </textarea>
       <button style={{ height: "5vh" }} onClick={() => eval(outputScript())}>
-        Kjør kode
+        Kjør koden
       </button>
     </div>
   );
