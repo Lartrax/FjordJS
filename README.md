@@ -25,7 +25,7 @@ Example:
 La tallet være 99.
 
 Konstant utsagn bruker tall, gjør så 
-    Konstant mindre er tall minus 1; 
+    Konstant mindre er tall minus 1, 
     Loggfør tall plus
     " bottles of beer on the wall " plus
     tall plus
@@ -35,7 +35,7 @@ Konstant utsagn bruker tall, gjør så
 
 Imens tallet overgår 0, 
     så utsagn med tallet,
-    samt tallet er tallet minus 1.
+    tallet er tallet minus 1.
 
 
 
