@@ -9,7 +9,7 @@ const translation = {
   tilsvarer: "===",
   hvis: "if (",
   dersom: "if (",
-  så: "{",
+  så: "£", // "{"
   overgår: ">",
   undergår: "<",
   eller: "||",
@@ -29,12 +29,12 @@ const App: Component = () => {
     `La tallet være 99.
 
 Konstant utsagn bruker tall, gjør så 
-Konstant mindre er tall minus 1; 
+Konstant mindre er tall minus 1,
 Loggfør tall plus " bottles of beer on the wall " plus tall plus " bottles of beer take one down pass it around " plus mindre plus " bottles of beer on the wall".
 
-Imens tallet overgår 0, 
-så utsagn med tallet,
-samt tallet er tallet minus 1.`
+Imens tallet overgår 0, så 
+utsagn med tallet,
+tallet er tallet minus 1.`
   );
   const [outputScript, setOutputScript] = createSignal<string>("");
 
@@ -83,7 +83,6 @@ samt tallet er tallet minus 1.`
     let inputArray = input
       .replaceAll(",", "µ")
       .replaceAll(".", "§")
-      .replaceAll("samt", "£")
       .split(/\s+/);
 
     inputArray.forEach((part, i) => {
@@ -97,86 +96,35 @@ samt tallet er tallet minus 1.`
       }
     });
 
-    // £ "samt" is used for opening once more code can be written
-    const samtArray = inputArray.join(" ").split(/(?=[£])/g);
+    // Split on "Så"
+    let boxesArray = inputArray.join(" ").split(/(?=[£])/g);
 
-    let samtConstruct: string[] = [];
+    boxesArray.forEach((section, i) => {
+      // Find first stopper §
+      // Replace all µ before stopper with "µ ;"
+      // Add closer to stopper § -> "§ $ ;" $ will later switch with }
+      if (section.includes("£")) {
+        const stopper = section.indexOf("§");
 
-    samtArray.forEach((line) => {
-      // Includes samt
-      if (line.includes("£")) {
-        const i = line.indexOf("§");
-
-        line =
-          line.substring(0, i) + "$ ;" + line.substring(i + 1, line.length);
-
-        samtConstruct.push(line.replace("£", ""));
-      } else {
-        samtConstruct.push(line);
+        section =
+          section.slice(0, stopper + 1).replaceAll("µ", "µ ;") +
+          "$ ;" +
+          section.slice(stopper + 1, section.length);
       }
+
+      boxesArray[i] = section;
     });
 
-    let punctuated = format(samtConstruct.join(" "), /(?<=[µ§])/g);
+    let punctuated = format(boxesArray.join(" "), /(?<=[µ§])/g);
 
-    const movedArray = punctuated.split(/(?<=[$])/g);
-
-    let movedConstruct: string[] = [];
-
-    movedArray.forEach((line) => {
-      if (line.includes("$")) {
-        // Find closest closed bracket
-        const closed_i = Math.max(
-          line.lastIndexOf(")"),
-          line.lastIndexOf("]"),
-          line.lastIndexOf("}")
-        );
-        const closed_char = line.charAt(closed_i);
-
-        // If closest open bracket is closer than closest closed bracket then move it too.
-        const open_i = Math.max(
-          line.lastIndexOf("("),
-          line.lastIndexOf("["),
-          line.lastIndexOf("{")
-        );
-        const open_char =
-          open_i > closed_i
-            ? line
-                .charAt(open_i)
-                .replace("(", ")")
-                .replace("[", "]")
-                .replace("{", "}")
-            : "";
-
-        // Remove closed char
-        line =
-          line.substring(0, closed_i - 1) +
-          " ;" +
-          line.substring(closed_i + 3, line.length);
-
-        // Remove artefacts
-        const opener = line.indexOf("(");
-        const closer = line.indexOf(")");
-
-        if (opener === -1 || closer < opener) {
-          line = line.replace(")", "");
-        }
-
-        // Append opening and closing char to moved position
-        movedConstruct.push(line.replace("$", open_char + " ;" + closed_char));
-      } else {
-        // Remove artefacts
-        const opener = line.indexOf("(");
-        const closer = line.indexOf(")");
-
-        if (opener === -1 || closer < opener) {
-          line = line.replace(")", "");
-        }
-
-        movedConstruct.push(line);
-      }
-    });
-
-    setOutputScript(movedConstruct.join("").replaceAll(" ;", ";\n"));
+    setOutputScript(
+      punctuated
+        .replaceAll("{", "{\n") // Formatting
+        .replaceAll("}", "\n}") // Formatting
+        .replaceAll("£", "{\n") // Switch "så" with "{"
+        .replaceAll("$", "\n}") // Switch "så" stopper with "}"
+        .replaceAll(" ;", ";\n") // Formatting
+    );
   });
 
   return (
