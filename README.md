@@ -1,5 +1,5 @@
 <p>
-    <img src="assets/banner.webp" alt="FjordJS">
+    <img src="public/banner.webp" alt="FjordJS">
 </p>
 
 # FjordJS
