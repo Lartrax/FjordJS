@@ -1,4 +1,50 @@
-import { createEffect, createSignal, type Component } from "solid-js";
+import {
+  createEffect,
+  createSignal,
+  For,
+  Show,
+  type Component,
+} from "solid-js";
+
+const templates: { name: string; content: string }[] = [
+  {
+    name: "99 Bottles",
+    content: `La tallet være 99.
+
+    Konstant utsagn bruker tall, gjør så 
+    Konstant mindre er tall minus 1,
+    Loggfør tall plus " bottles of beer on the wall\\n" plus tall plus " bottles of beer\\ntake one down pass it around\\n" plus mindre plus " bottles of beer on the wall".
+    
+    Imens tallet overgår 0, så 
+    utsagn med tallet,
+    tallet er tallet minus 1.`,
+  },
+  {
+    name: "Bil på motorvei",
+    content: `: En bil kjører nedover en motorvei i 80 km/t.
+La fart være 80.
+
+: Bilen sakker ned med: 2 km/t hvert sekund.
+
+La sekund være 0.
+
+Imens fart overgår 40, så
+sekund er sekund plus 1,
+fart er fart minus 2.
+
+: Hvor lang tid tar det før farten dens er 40 km/t?
+
+Loggfør "Det tar " plus sekund plus " sekunder før bilen har sakket ned til 40 km/t".`,
+  },
+  {
+    name: "..",
+    content: "",
+  },
+  {
+    name: "...",
+    content: "",
+  },
+];
 
 const translation = {
   la: "let",
@@ -22,6 +68,7 @@ const translation = {
   bruker: " = (",
   gjør: "=>",
   med: "(",
+  ":": "//",
 };
 
 const App: Component = () => {
@@ -37,6 +84,8 @@ utsagn med tallet,
 tallet er tallet minus 1.`
   );
   const [outputScript, setOutputScript] = createSignal<string>("");
+  const [activeTemplate, setActiveTemplate] = createSignal(templates[0]);
+  const [dropped, setDropped] = createSignal<boolean>(false);
 
   const format = (text: string, regex: RegExp): string => {
     // Create array of lines by splitting on µ and §. But keep the symbols in the array.
@@ -117,6 +166,7 @@ tallet er tallet minus 1.`
 
     setOutputScript(
       punctuated
+        .replaceAll("?", ";")
         .replaceAll("; else", "\nelse")
         .replaceAll("{", "{\n") // Formatting
         .replaceAll("}", "\n}") // Formatting
@@ -140,6 +190,49 @@ tallet er tallet minus 1.`
         background: "#333",
       }}
     >
+      <div
+        style={{ border: "1px solid #555", "margin-top": "1rem" }}
+        onClick={() => setDropped((d) => !d)}
+      >
+        <p
+          style={{
+            color: "#eee",
+            "padding-left": "1rem",
+            cursor: "pointer",
+            "user-select": "none",
+          }}
+        >
+          {activeTemplate().name}
+        </p>
+        <Show when={dropped()}>
+          <span
+            style={{
+              position: "fixed",
+              width: "100%",
+              background: "#666",
+            }}
+          >
+            <For each={templates}>
+              {(template, _) => (
+                <p
+                  style={{
+                    color: "#ddd",
+                    "padding-left": "1rem",
+                    cursor: "pointer",
+                    "user-select": "none",
+                  }}
+                  onClick={() => {
+                    setActiveTemplate(template);
+                    setInputScript(template.content);
+                  }}
+                >
+                  {template.name}
+                </p>
+              )}
+            </For>
+          </span>
+        </Show>
+      </div>
       <textarea
         style={{
           height: "40vh",
@@ -165,7 +258,10 @@ tallet er tallet minus 1.`
       >
         {outputScript()}
       </textarea>
-      <button style={{ height: "5vh" }} onClick={() => eval(outputScript())}>
+      <button
+        style={{ height: "5vh", "margin-bottom": "1rem" }}
+        onClick={() => eval(outputScript())}
+      >
         Kjør koden
       </button>
     </div>
