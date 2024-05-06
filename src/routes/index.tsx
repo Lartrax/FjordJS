@@ -7,12 +7,12 @@ const templates: { name: string; content: string }[] = [
     content: `La tallet være 99.
 
 Konstant utsagn bruker tall, gjør så 
-konstant mindre er tall minus 1,
-loggfør tall plus " bottles of beer on the wall\\n" plus tall plus " bottles of beer\\ntake one down pass it around\\n" plus mindre plus " bottles of beer on the wall".
+konstant mindre er tall - 1,
+loggfør tall + " bottles of beer on the wall\\n" + tall + " bottles of beer\\ntake one down pass it around\\n" + mindre + " bottles of beer on the wall".
 
 Imens tallet overgår 0, så 
 utsagn med tallet,
-tallet er tallet minus 1.`,
+tallet blir tallet - 1.`,
   },
   {
     name: "Bil på motorvei",
@@ -24,12 +24,12 @@ La fart være 80.
 La sekund være 0.
 
 Imens fart overgår 40, så
-sekund er sekund plus 1,
-fart er fart minus 2.
+sekund blir sekund + 1,
+fart blir fart - 2.
 
 : Hvor lang tid tar det før farten dens er 40 km/t?
 
-Loggfør "Det tar " plus sekund plus " sekunder før bilen har sakket ned til 40 km/t".`,
+Loggfør "Det tar " + sekund + " sekunder før bilen har sakket ned til 40 km/t".`,
   },
   {
     name: "..",
@@ -46,6 +46,7 @@ const translation = {
   konstant: "const",
   være: "=",
   er: "=",
+  blir: "=",
   ligner: "==",
   tilsvarer: "===",
   hvis: "if (",
