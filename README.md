@@ -33,7 +33,7 @@ plus mindre plus " bottles of beer on the wall".
 
 Imens tallet overgår 0, så 
 utsagn med tallet,
-tallet er tallet minus 1.
+tallet blir tallet minus 1.
 
 
 
