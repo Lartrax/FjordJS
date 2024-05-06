@@ -199,6 +199,7 @@ export default function Home() {
           <span
             style={{
               position: "absolute",
+              width: "90%",
               display: "flex",
               "flex-direction": "column",
               gap: "1rem",

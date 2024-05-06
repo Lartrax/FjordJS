@@ -9,6 +9,7 @@ export default function App() {
     <Router
       root={(props) => (
         <MetaProvider>
+          <Title>FjordJS</Title>
           <Suspense>{props.children}</Suspense>
         </MetaProvider>
       )}
