@@ -21,15 +21,15 @@ La fart være 80.
 
 : Bilen sakker ned med: 2 km/t hvert sekund.
 
-La sekund være 0.
+La tid være 0.
 
 Imens fart overgår 40, så
-sekund blir sekund + 1,
+tid blir tid + 1,
 fart blir fart - 2.
 
 : Hvor lang tid tar det før farten dens er 40 km/t?
 
-Loggfør "Det tar " + sekund + " sekunder før bilen har sakket ned til 40 km/t".`,
+Loggfør "Det tar " + tid + " sekunder før bilen har sakket ned til 40 km/t".`,
   },
   {
     name: "..",
@@ -239,6 +239,7 @@ export default function Home() {
           color: "#eee",
         }}
         onInput={(e) => setInputScript(e.target.value)}
+        value={inputScript()}
       >
         {inputScript()}
       </textarea>
@@ -252,9 +253,8 @@ export default function Home() {
           background: "#666",
           color: "#ddd",
         }}
-      >
-        {outputScript()}
-      </textarea>
+        value={outputScript()}
+      />
       <button
         style={{ height: "5vh", "margin-bottom": "1rem" }}
         onClick={() => eval(outputScript())}
